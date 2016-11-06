@@ -42,23 +42,21 @@ int main()
 	{
 		send(newsd,"error",5,0);
 		close(newsd);
-}
-else
-{
-while(fgets(fileread,sizeof(fileread),fp))
-{
-if(send(newsd,fileread,sizeof(fileread),0)<0)
-{
-printf("Cant send\n");
-}
-sleep(1);
-}
-if(!fgets(fileread,si zeof(fileread),fp))
-{
-send(newsd,"completed",999999999,0);
-}
-return(0);
-}
+	}
+	else
+	{
+	while(fgets(fileread,sizeof(fileread),fp))
+	{
+		if(send(newsd,fileread,sizeof(fileread),0)<0) {
+		printf("Cant send\n");
+		}
+		sleep(1);
+	}
+		if(!fgets(fileread,sizeof(fileread),fp)) {
+			send(newsd,"completed",999999999,0);
+		}
+	return(0);
+	}
 }
 
 
