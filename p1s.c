@@ -8,16 +8,21 @@
 #include<stdlib.h>
 #include <fcntl.h>
 #include<unistd.h>
+typedef struct f1
+{
+	char name[20];
+	long size;
+}fp;
 int main()
 {
     struct sockaddr_in saddr,caddr;
-    int sockfd, slen, clen,ads;
+    int sockfd, slen, clen,ads; long size=0;
     sockfd = socket(AF_INET,SOCK_STREAM,0);
     slen = sizeof(saddr);
     bzero(&saddr, slen);
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = INADDR_ANY;
-    saddr.sin_port = htons(19000);
+    saddr.sin_port = htons(13000);
     bind(sockfd, (struct sockaddr *)&saddr,sizeof(saddr));
     listen(sockfd,5);
     printf("Listening...\n");
@@ -33,34 +38,38 @@ int main()
 		printf("Connected : ");
 		inet_ntop(AF_INET, &caddr.sin_addr, str, sizeof(str));
          	printf("%s\n",str);
-	}        
 	int pid = fork();
 	if(pid==0)
 	{
+		while(1)
+		{
 		//close(sockfd);
-		int count=0;
-		int x = recv(sd,fname,sizeof(fname),0);
+		long count=0; fp a;
+		int x = recv(sd,(fp *)&a,sizeof(a),0);
+		strcpy(fname,a.name);	
+		long size = a.size;
 		fname[x]='\0';
-		char buf[8];		
+		printf("%ld",size);
+		char buf[8];
 		printf("%s\n",fname);
-		int fd = creat(fname,S_IRWXU);
+		int fd = creat("qwerty.txt",S_IRWXU);
 		bzero(buf,sizeof(buf));		
 		while(1)
 		{
+			printf("Printing 1\n");			
 			r = recv(sd,buf,sizeof(buf),0);
-			if(r<=0)
+			printf("Printing 2\n");			
+			n = write(fd,buf,r);			
+			count = count + r;
+			printf("Count\n");
+			if(count>=size)
 				break;
-			n = write(fd,buf,r);
-			if(n <= 0)
-			{ 
-			buf[n]='\0';
-				break;
-			}			
-			count = count + n;
-			bzero(buf,sizeof(buf));
-			printf("\rReceived bytes %d",count);
+			//bzero(buf,sizeof(buf));
+			printf("Received bytes %ld\n",count);
+		}
+		printf("Done!!\n");
 		}
 	}
-	close(sd);
+	}
     }
 }
