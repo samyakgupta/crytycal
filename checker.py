@@ -52,18 +52,21 @@ def match(output):
         return 404
 
 file = argv[1]
-filename, file_extension = os.path.splittext(file);
-lang = file_extension
+filename, file_extension = os.path.splitext(file);
+garbage,lang = file_extension.split(".")
+# print file
+# print filename
+# print lang
 
 testin = argv[2]
 testout = argv[3]
 timeout = '1' # secs
 
 if lang == 'c':
-	print(codes[compile(file,'c')])
-	print (codes[run(filename,testin,timeout,lang)])
-	print (match(testout))
+    print (codes[compile(file,'c')])
+    print (codes[run('add',testin,timeout,lang)])
+    print (match(testout))
 elif lang == 'java':
-	print(codes[compile(file,'java')])
-	print (codes[run(filename,testin,timeout,lang)])
-	print (match(testout))
+    print (codes[compile(file,'java')])
+    print (codes[run(file,testin,timeout,lang)])
+    print (match(testout))
