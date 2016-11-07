@@ -51,6 +51,7 @@ def match(output):
     else:
         return 404
 
+<<<<<<< HEAD
 file = raw_input()
 filename, file_extension = os.path.splittext(file);
 lang = file_extension
@@ -68,3 +69,24 @@ elif lang == 'java':
 	print (codes[run('add',testin,timeout,lang)])
 	print (match(testout))
 
+=======
+file = argv[1]
+filename, file_extension = os.path.splitext(file);
+garbage,lang = file_extension.split(".")
+# print file
+# print filename
+# print lang
+
+testin = argv[2]
+testout = argv[3]
+timeout = '1' # secs
+
+if lang == 'c':
+    print (codes[compile(file,'c')])
+    print (codes[run('add',testin,timeout,lang)])
+    print (match(testout))
+elif lang == 'java':
+    print (codes[compile(file,'java')])
+    print (codes[run(file,testin,timeout,lang)])
+    print (match(testout))
+>>>>>>> 76f2e6301460a5613ce5a1e8e00ef5d4239f3d8f
