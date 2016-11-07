@@ -1,5 +1,5 @@
 import os, filecmp
-
+from sys import argv
 codes = {200:'success',404:'file not found',400:'error',408:'timeout'}
 
 def compile(file,lang):
@@ -53,10 +53,10 @@ def match(output):
 
 file = 'add.c'
 lang = 'c'
-testin = 'testin.txt'
-testout = 'testout.txt'
+testin = argv[1]
+testout = argv[2]
 timeout = '1' # secs
 
 print(codes[compile(file,'c')])
-print (codes[run('add',testin,timeout,lang)])
-print (match(testout))
+print (codes[run('add',argv[1],timeout,lang)])
+print (match(argv[2]))
