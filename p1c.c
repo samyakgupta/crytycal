@@ -25,7 +25,7 @@ int main()
     bzero(&saddr, slen);
     saddr.sin_family = AF_INET;
     saddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    saddr.sin_port = htons(13000);
+    saddr.sin_port = htons(17000);
     slen = sizeof(saddr);
 	int r=0;
     if((ads=connect(sockfd,(struct sockaddr *)&saddr,slen))<0)
@@ -35,7 +35,7 @@ int main()
     }
     while(1)
     {
-    printf("\nEnter File name :");
+    printf("\nEnter File name : ");
     char buff[16],buf1[8];int r;
     bzero(buff,16);
     gets(buff);
@@ -46,17 +46,20 @@ int main()
     strcpy(a.name,buff);
     a.size = filesize;
     lseek(f,0,SEEK_SET);
-    printf("File size : %ld, transferring..\n",a.size);
+    printf("File size : %ld , transferring..\n",a.size);
     send(sockfd,(fp *)&a,sizeof(a),0);
     if(f==-1)
-	printf("Invalid File name");
+	printf("Invalid File name\n");
     else
     {
-     printf("Valid File");
     fstat(f, &stat_buf);	
     offset=0;
     sendfile(sockfd,f,&offset,stat_buf.st_size);
-    printf("Send Successful");
+    printf("File Uploaded\n");
+    printf("Checking....\n");
+    char res[30];
+    recv(sockfd,res,sizeof(res),0); 
+    printf("\n%s\n",res);
     close(f);
     }
  }
