@@ -52,7 +52,7 @@ def match(output):
         return 404
 
 
-file = raw_input()
+file = raw_input('')
 filename, file_extension = os.path.splittext(file);
 lang = file_extension
 
