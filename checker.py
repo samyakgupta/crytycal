@@ -51,31 +51,20 @@ def match(output):
     else:
         return 404
 
-<<<<<<< HEAD
 file = raw_input()
 filename, file_extension = os.path.splittext(file);
 lang = file_extension
 
-=======
-file = 'add.c'
-lang = 'c'
->>>>>>> c0e6b5aaf789ef828b1126ecd19a859fefbfd310
 testin = argv[1]
 testout = argv[2]
 timeout = '1' # secs
 
-<<<<<<< HEAD
-if lang = 'c':
+if lang == 'c':
 	print(codes[compile(file,'c')])
 	print (codes[run('add',testin,timeout,lang)])
 	print (match(testout))
-elif lang = 'java'
+elif lang == 'java':
 	print(codes[compile(file,'java')])
 	print (codes[run('add',testin,timeout,lang)])
 	print (match(testout))
 
-=======
-print(codes[compile(file,'c')])
-print (codes[run('add',argv[1],timeout,lang)])
-print (match(argv[2]))
->>>>>>> c0e6b5aaf789ef828b1126ecd19a859fefbfd310
